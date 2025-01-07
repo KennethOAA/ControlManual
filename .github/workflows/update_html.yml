@@ -1,1 +1,24 @@
- 
+ name: Deploy HTML to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # O la rama en la que estés trabajando (puede ser master)
+
+jobs:
+  deploy:
+    runs-on: windows-latest  # Usamos Windows como entorno de ejecución
+
+    steps:
+    # Paso 1: Hacer checkout del repositorio
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Paso 2: Subir el archivo HTML a GitHub Pages
+    - name: Upload index.html to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        folder: ./  # Esto le dice a la acción que el archivo está en la raíz del repositorio
+        target_branch: gh-pages  # La rama donde se desplegará el archivo HTML
+        github_token: ${{ secrets.GITHUB_TOKEN }}  # El token de GitHub para autenticación
+
